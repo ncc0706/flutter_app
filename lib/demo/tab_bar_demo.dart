@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/demo/basic.dart';
 import 'package:flutter_app/demo/post_page.dart';
 
 import 'list_view_demo.dart';
@@ -47,11 +48,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
         body: TabBarView(
           children: <Widget>[
             ListViewDemo(),
-            Icon(
-              Icons.directions_bike,
-              color: Colors.grey,
-              size: 128.0,
-            ),
+            Basic(),
             Icon(
               Icons.directions_boat,
               color: Colors.grey,
