@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+// 参考
+// https://blog.csdn.net/ljh910329/article/details/95471566
 
 class Login extends StatefulWidget {
   @override
@@ -7,31 +11,52 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  var _usernameFocus = new FocusNode();
+  var _passwordFocus = new FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: Colors.yellow,
-      body: Container(
-        decoration: BoxDecoration(
+      body: GestureDetector(
+        onTap: () {
+          _usernameFocus.unfocus();
+          debugPrint('click blank area.');
+        },
+        child: Container(
+          decoration: BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
-                image: NetworkImage(
-                    'https://images.pexels.com/photos/255501/pexels-photo-255501.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'))),
-        child: ListView(
-          children: <Widget>[
-            SizedBox(
-              height: 80,
-            ),
-            logoImage(),
-            SizedBox(
-              height: 70,
-            ),
-            loginForm(),
-            SizedBox(
-              height: 80,
-            ),
-            loginButton(),
-          ],
+                image: AssetImage('images/pexels-photo-255501.jpeg'),
+                colorFilter:
+                    ColorFilter.mode(Colors.amber[100], BlendMode.dstIn)),
+          ),
+          child: ListView(
+            children: <Widget>[
+              SizedBox(
+                height: 0,
+              ),
+              // logoImage(),
+              SizedBox(
+                height: 70,
+              ),
+              loginForm(),
+              SizedBox(
+                height: 80,
+              ),
+              loginButton(),
+              SizedBox(
+                height: 30,
+              ),
+              thirdLogin(),
+
+              SizedBox(
+                height: 15,
+              ),
+
+              bottomArea(),
+            ],
+          ),
         ),
       ),
     );
@@ -48,6 +73,9 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
+    // 焦点事件
+    _usernameFocus.addListener(_focusListener);
+
     _usernameController.addListener(() {
       print(_usernameController.text);
 
@@ -61,9 +89,16 @@ class _LoginState extends State<Login> {
     super.initState();
   }
 
+  Future _focusListener() async {
+    if (_usernameFocus.hasFocus) {
+      print('username focus.');
+    }
+  }
+
   @override
   void dispose() {
     _usernameController.dispose();
+    _usernameFocus.removeListener(_focusListener);
     super.dispose();
   }
 
@@ -122,7 +157,8 @@ class _LoginState extends State<Login> {
         color: Colors.green[300],
         child: Text(
           '登录',
-          style: Theme.of(context).primaryTextTheme.headline,
+          style: TextStyle(fontSize: 22, color: Colors.blueGrey),
+          // style: Theme.of(context).primaryTextTheme.headline,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular((10.0)),
@@ -131,6 +167,97 @@ class _LoginState extends State<Login> {
           _formKey.currentState.save();
           print("$_username, $_password");
         },
+      ),
+    );
+  }
+
+  Widget thirdLogin() {
+    return Container(
+      margin: EdgeInsets.only(left: 20, right: 20),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Container(
+                width: 80,
+                height: 1.0,
+                color: Colors.purple,
+              ),
+              Text('第三方登录'),
+              Container(
+                width: 80,
+                height: 1.0,
+                color: Colors.purple,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 18,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              IconButton(
+                color: Colors.green[200],
+                icon: Icon(FontAwesomeIcons.weixin),
+                iconSize: 40,
+                onPressed: () {
+                  print('click weixin');
+                },
+              ),
+              IconButton(
+                color: Colors.green[200],
+                icon: Icon(FontAwesomeIcons.facebook),
+                iconSize: 40,
+                onPressed: () {
+                  print('click facebook');
+                },
+              ),
+              IconButton(
+                color: Colors.green[200],
+                icon: Icon(FontAwesomeIcons.qq),
+                iconSize: 40,
+                onPressed: () {
+                  print('click qq');
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget bottomArea() {
+    return Container(
+      margin: EdgeInsets.only(right: 30, left: 30),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          FlatButton(
+            child: Text(
+              '忘记密码?',
+              style: TextStyle(color: Colors.blue[400], fontSize: 16.0),
+            ),
+            onPressed: () {
+              print('click forget password');
+            },
+          ),
+          FlatButton(
+            child: Text(
+              "快速注册",
+              style: TextStyle(
+                color: Colors.blue[400],
+                fontSize: 16.0,
+              ),
+            ),
+            //点击快速注册、执行事件
+            onPressed: () {},
+          ),
+        ],
       ),
     );
   }
