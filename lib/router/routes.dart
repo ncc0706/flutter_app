@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter_app/demo/bg.dart';
 import 'package:flutter_app/demo/demo.dart';
 import 'package:flutter_app/pages/home.dart';
+import 'package:flutter_app/pages/login.dart';
 
 class Routes {
   static Router router;
@@ -10,6 +11,8 @@ class Routes {
   static String home = "/home";
   static String demo = '/demo';
 
+  static String login = "/login";
+
   static void configureRoutes(Router router) {
     router.define('/', handler: new Handler(handlerFunc: (context, params) {
       return new Home();
@@ -17,6 +20,10 @@ class Routes {
 
     router.define(home, handler: new Handler(handlerFunc: (context, params) {
       return new Home();
+    }));
+
+    router.define(login, handler: new Handler(handlerFunc: (context, params) {
+      return new Login();
     }));
 
     // demo
