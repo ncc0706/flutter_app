@@ -1,20 +1,31 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter_app/demo/bg.dart';
-import 'package:flutter_app/demo/helloworld.dart';
+import 'package:flutter_app/demo/demo.dart';
+import 'package:flutter_app/pages/home.dart';
 
 class Routes {
   static Router router;
 
   static String root = '/';
-
-  static String bg = '/bg';
+  static String home = "/home";
+  static String demo = '/demo';
 
   static void configureRoutes(Router router) {
     router.define('/', handler: new Handler(handlerFunc: (context, params) {
-      return new HelloWorld();
+      return new Home();
     }));
 
-    router.define(bg, handler: bgHandler);
+    router.define(home, handler: new Handler(handlerFunc: (context, params) {
+      return new Home();
+    }));
+
+    // demo
+    router.define(demo, handler: new Handler(handlerFunc: (context, params) {
+      return new Demo();
+    }));
+
+    // 全屏背景图片
+    router.define("/bg", handler: bgHandler);
 
     Routes.router = router;
   }

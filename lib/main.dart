@@ -15,9 +15,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.bg,
+      initialRoute: Routes.demo,
       onGenerateRoute: Routes.router.generator,
-      theme: ThemeData(primaryColor: Colors.amber),
+      theme: ThemeData(
+          // primaryColor: Colors.amberAccent,
+          primarySwatch: Colors.yellow,
+          // accentColor: Colors.tealAccent
+          highlightColor: Color.fromRGBO(255, 255, 255, 0.5), // 高亮颜色
+          splashColor: Colors.white // 水波纹效果
+          ),
     );
   }
 }
